@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusConnect | College Notice Board</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">CC</div>
+      <div>
+        <h1>CampusConnect</h1>
+        <span>College Digital Notice Board</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="nav-btn active" data-view="studentView">Student Portal</button>
+      <button class="nav-btn" data-view="adminView">Admin Portal</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="studentView" class="view active-view">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">CAMPUS UPDATES</span>
+          <h2>Stay informed.<br><span>Never miss a notice.</span></h2>
+          <p>Find academic announcements, events, examinations and department updates in one place.</p>
+        </div>
+        <div class="hero-card">
+          <strong id="noticeCount">0</strong>
+          <span>Published Notices</span>
+        </div>
+      </div>
+
+      <section class="notice-panel">
+        <div class="toolbar">
+          <div class="search-wrap">
+            <span>⌕</span>
+            <input id="searchInput" type="search" placeholder="Search notices...">
+          </div>
+          <select id="departmentFilter">
+            <option value="ALL">All Departments</option>
+            <option value="CSE">Computer Science (CSE)</option>
+            <option value="ECE">Electronics (ECE)</option>
+            <option value="EEE">Electrical (EEE)</option>
+            <option value="MECH">Mechanical (MECH)</option>
+            <option value="CIVIL">Civil (CIVIL)</option>
+            <option value="IT">Information Technology (IT)</option>
+            <option value="MBA">MBA</option>
+            <option value="GENERAL">General / All Students</option>
+          </select>
+          <select id="categoryFilter">
+            <option value="ALL">All Categories</option>
+            <option value="Academic">Academic</option>
+            <option value="Exam">Exam</option>
+            <option value="Event">Event</option>
+            <option value="Placement">Placement</option>
+            <option value="General">General</option>
+          </select>
+          <button id="clearFilters" class="secondary-btn">Clear</button>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <h3>Latest Notices</h3>
+            <p id="resultText">Showing all notices</p>
+          </div>
+          <span class="live-dot">● Live Board</span>
+        </div>
+
+        <div id="noticeGrid" class="notice-grid"></div>
+        <div id="emptyState" class="empty hidden">
+          <div class="empty-icon">⌁</div>
+          <h3>No notices found</h3>
+          <p>Try changing your search or department filter.</p>
+        </div>
+      </section>
+    </section>
+
+    <section id="adminView" class="view">
+      <div id="loginPanel" class="login-card">
+        <div class="login-icon">🔐</div>
+        <span class="eyebrow">ADMIN ACCESS</span>
+        <h2>Administrator Login</h2>
+        <p>Manage college notices and attachments.</p>
+        <form id="loginForm">
+          <label>Username<input id="username" required placeholder="Enter username"></label>
+          <label>Password<input id="password" required type="password" placeholder="Enter password"></label>
+          <button class="primary-btn" type="submit">Sign In</button>
+          <small class="demo-hint">Demo: <b>admin</b> / <b>admin123</b></small>
+          <div id="loginError" class="error"></div>
+        </form>
+      </div>
+
+      <div id="adminPanel" class="admin-layout hidden">
+        <aside class="admin-sidebar">
+          <span class="eyebrow">ADMIN PANEL</span>
+          <h2>Notice Manager</h2>
+          <p>Create and manage announcements for students.</p>
+          <div class="admin-stat"><strong id="adminCount">0</strong><span>Total notices</span></div>
+          <button id="logoutBtn" class="logout-btn">Log out</button>
+        </aside>
+
+        <section class="admin-content">
+          <div class="admin-heading">
+            <div>
+              <h2 id="formTitle">Publish a Notice</h2>
+              <p>Add clear information so students can find it quickly.</p>
+            </div>
+            <button id="cancelEdit" class="secondary-btn hidden">Cancel Edit</button>
+          </div>
+
+          <form id="noticeForm" class="form-card">
+            <input type="hidden" id="editId">
+            <div class="form-grid">
+              <label class="wide">Notice Title*
+                <input id="title" required maxlength="100" placeholder="e.g. Mid-Semester Examination Schedule">
+              </label>
+              <label>Department*
+                <select id="department" required>
+                  <option value="GENERAL">General / All Students</option>
+                  <option value="CSE">CSE</option><option value="ECE">ECE</option>
+                  <option value="EEE">EEE</option><option value="MECH">MECH</option>
+                  <option value="CIVIL">CIVIL</option><option value="IT">IT</option><option value="MBA">MBA</option>
+                </select>
+              </label>
+              <label>Category*
+                <select id="category" required>
+                  <option>Academic</option><option>Exam</option><option>Event</option>
+                  <option>Placement</option><option>General</option>
+                </select>
+              </label>
+              <label>Publish Date*
+                <input id="date" type="date" required>
+              </label>
+              <label class="check-row">
+                <input id="important" type="checkbox"> Mark as important
+              </label>
+              <label class="wide">Description*
+                <textarea id="description" required rows="5" maxlength="800" placeholder="Write the notice details..."></textarea>
+              </label>
+              <label class="wide file-label">
+                Attachment
+                <input id="attachment" type="file" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.txt">
+                <span class="file-help">PDF, image, DOC or TXT • Keep demo files reasonably small.</span>
+                <span id="currentAttachment" class="current-file"></span>
+              </label>
+            </div>
+            <button class="primary-btn" type="submit">Publish Notice</button>
+          </form>
+
+          <div class="admin-list-card">
+            <div class="section-heading">
+              <div><h3>Manage Notices</h3><p>Edit or remove published notices.</p></div>
+            </div>
+            <div id="adminList"></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
